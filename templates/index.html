@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Test</title>
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+    <style>
+      body { margin:20px; }
+      article, aside, figure, footer, header, hgroup, menu, nav, section { 
+        display:block;
+      }
+    </style>
+    <script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAA5u0EYhcpljm8Vl7ybsGOYhRlOb26qSyU154aZeLwOrF4C7-DphRZtXI6YAsnABUMogZv0I3Vr9TErg"></script>
+    <script>
+        var apiKey = "ABQIAAAA5u0EYhcpljm8Vl7ybsGOYhRlOb26qSyU154aZeLwOrF4C7-DphRZtXI6YAsnABUMogZv0I3Vr9TErg"
+        google.load("earth", "1");
+        
+        var ge;
+
+        google.load("earth", "1");
+        
+        function init() {
+          google.earth.createInstance('map3d', initCallback, failureCallback);
+        }
+        
+        function initCallback(instance) {
+          ge = instance;
+          ge.getWindow().setVisibility(true);
+        
+          // add a navigation control
+          ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
+        
+          // add some layers
+          ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
+          ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
+        
+          createNetworkLink();
+        
+        }
+        
+        function failureCallback(errorCode) {
+        }
+        
+        function createNetworkLink() {
+          var networkLink = ge.createNetworkLink("");
+          networkLink.setDescription("NetworkLink open to fetched content");
+          networkLink.setName("Open NetworkLink");
+          networkLink.setFlyToView(true);
+        
+          // create a Link object
+          var link = ge.createLink("");
+          link.setHref("http://ogmimage.appspot.com/imageServer");
+        
+          // attach the Link to the NetworkLink
+          networkLink.setLink(link);
+        
+          // add the NetworkLink feature to Earth
+          ge.getFeatures().appendChild(networkLink);
+          console.log("network link added");
+        }
+        
+        function buttonClick() {
+          createNetworkLink();
+        }
+        
+        google.setOnLoadCallback(init);
+    </script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="leftBar" style="background-color:gray; float:left;margin-right:15px; width=350px;">
+      <img width="222" height="65" src="/static/img/ogmlogo.jpg" /> 
+      </div>    
+      <div id="map3d" style="height: 500px; width: 800px; float:left"></div>
+    </div>    
+  </body>	
+</html>
